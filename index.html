@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transfer.ai - Music Transfer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ESTÉTICA APPLE / CLEAN */
+        :root {
+            --bg: #F5F5F7;
+            --text: #1D1D1F;
+            --blue: #0071E3;
+            --blue-hover: #0077ED;
+            --white: #FFFFFF;
+            --gray: #86868b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .brand {
+            font-weight: 600;
+            font-size: 1.3rem;
+            letter-spacing: -0.5px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: var(--gray);
+            margin-left: 25px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            color: var(--blue);
+        }
+
+        /* MAIN */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 50px;
+            font-weight: 400;
+        }
+
+        /* CAJA DE TRANSFERENCIA */
+        .transfer-box {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            transition: transform 0.3s;
+        }
+
+        .selectors {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        select {
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 1px solid #d2d2d7;
+            font-size: 1rem;
+            min-width: 180px;
+            background: #fff;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .btn {
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: var(--blue-hover);
+            transform: scale(1.02);
+        }
+
+        /* SIMULACIÓN DE PROCESO */
+        #progress-area {
+            width: 100%;
+            display: none;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .fill {
+            height: 100%;
+            background: var(--blue);
+            width: 0%;
+            transition: width 0.2s;
+        }
+
+        .status-text {
+            margin-top: 10px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* DASHBOARD (LOGIN) */
+        .dashboard {
+            display: none;
+            /* Oculto hasta login */
+            margin-top: 50px;
+            text-align: left;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* PUBLICIDAD */
+        .ad-space {
+            margin: 60px 0;
+            background: #eee;
+            height: 100px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            border: 1px dashed #ccc;
+            font-size: 0.8rem;
+        }
+
+        /* SOPORTE */
+        .support {
+            background: white;
+            max-width: 600px;
+            margin: 0 auto 60px auto;
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #d2d2d7;
+            border-radius: 10px;
+            font-family: inherit;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="brand">transfer.ai</div>
+        <div class="menu">
+            <a href="#transfer">Transferir</a>
+            <a href="#login" onclick="toggleLogin()">Mi Cuenta</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Música sin barreras.</h1>
+        <p class="subtitle">Pasa tus playlists de Spotify a Apple Music en un clic. Gratis.</p>
+
+        <div class="transfer-box" id="transfer">
+            <div class="selectors">
+                <select id="from">
+                    <option>Spotify</option>
+                    <option>Apple Music</option>
+                    <option>YouTube Music</option>
+                </select>
+                <span style="color:var(--gray)">➔</span>
+                <select id="to">
+                    <option>Apple Music</option>
+                    <option>Spotify</option>
+                    <option>Tidal</option>
+                </select>
+            </div>
+
+            <button class="btn" onclick="startTransfer()">Iniciar Transferencia</button>
+
+            <div id="progress-area">
+                <div class="progress-bar">
+                    <div class="fill" id="fill"></div>
+                </div>
+                <p class="status-text" id="status">Conectando con Spotify...</p>
+            </div>
+        </div>
+
+        <div class="ad-space">
+            Google AdSense Banner (Aquí irán tus anuncios reales)
+        </div>
+
+        <div id="dashboard-view" class="dashboard">
+            <h2 style="margin-bottom:20px">Tu Resumen Mensual</h2>
+            <div class="stats-grid">
+                <div class="card">
+                    <h3 style="margin-top:0">Top Artista</h3>
+                    <div style="display:flex; align-items:center; gap:15px; margin-top:15px;">
+                        <div style="width:50px; height:50px; background:#333; border-radius:50%"></div>
+                        <div>
+                            <strong>Bad Bunny</strong><br>
+                            <span style="font-size:0.8rem; color:var(--gray)">42 horas escuchadas</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top:0">Canción + repetida</h3>
+                    <p style="font-size:1.1rem; color:var(--blue)">"Monaco"</p>
+                    <div style="height:5px; background:#eee; border-radius:5px; margin-top:10px;">
+                        <div style="width:80%; height:100%; background:var(--blue); border-radius:5px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 80px;">
+            <h2 style="margin-bottom: 20px;">Soporte</h2>
+            <div class="support">
+                <form action="https://formspree.io/f/TU_ID_DE_FORMSPREE" method="POST">
+                    <input type="email" name="email" placeholder="Tu correo electrónico" required>
+                    <textarea name="message" rows="4" placeholder="¿Qué problema tienes?" required></textarea>
+                    <button type="submit" class="btn" style="width:100%">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Lógica Visual (Simulación para Demo)
+        function startTransfer() {
+            const pArea = document.getElementById('progress-area');
+            const fill = document.getElementById('fill');
+            const status = document.getElementById('status');
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+
+            if (from === to) {
+                alert("El origen y el destino no pueden ser iguales.");
+                return;
+            }
+
+            pArea.style.display = 'block';
+            let width = 0;
+
+            status.innerText = `Analizando playlists en ${from}...`;
+
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    status.innerText = "¡Transferencia completada con éxito!";
+                    status.style.color = "#0071E3";
+                    setTimeout(() => { alert("¡Música transferida! (Simulación)"); }, 500);
+                } else {
+                    width++;
+                    fill.style.width = width + '%';
+                    if (width === 30) status.innerText = `Encontrando coincidencias en ${to}...`;
+                    if (width === 70) status.innerText = "Creando nueva playlist...";
+                }
+            }, 30); // Velocidad de la barra
+        }
+
+        function toggleLogin() {
+            const dash = document.getElementById('dashboard-view');
+            if (dash.style.display === 'block') {
+                dash.style.display = 'none';
+            } else {
+                const user = prompt("Simulación de Login: Escribe tu nombre");
+                if (user) {
+                    dash.style.display = 'block';
+                    alert(`Bienvenido, ${user}. Tus estadísticas se están cargando.`);
+                    // Scroll suave hacia abajo
+                    dash.scrollIntoView({ behavior: "smooth" });
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
