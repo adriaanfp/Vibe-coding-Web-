@@ -2,7 +2,7 @@
 
 > **La forma más limpia y sencilla de transferir tus playlists entre Spotify, Apple Music y YouTube Music.**
 
-![Project Status](https://img.shields.io/badge/Status-Prototype-orange) ![License](https://img.shields.io/badge/License-MIT-blue) ![Design](https://img.shields.io/badge/Design-Apple%20Style-white)
+![Project Status](https://img.shields.io/badge/Status-Prototype-orange) ![License](https://img.shields.io/badge/License-MIT-blue)
 
 SyncFlow es una aplicación web diseñada con una estética minimalista que permite a los usuarios migrar sus bibliotecas musicales entre diferentes servicios de streaming. El proyecto está preparado para monetización mediante **Google AdSense** e incluye un sistema de soporte integrado.
 
